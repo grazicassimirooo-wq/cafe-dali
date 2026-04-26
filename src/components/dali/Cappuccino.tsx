@@ -2,33 +2,38 @@ import cappuccinoImg from "@/assets/cappuccino.jpg";
 
 export function Cappuccino() {
   return (
-    <section className="relative py-16 lg:py-24">
-      <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-2 lg:px-10">
-        <div className="relative">
+    <section className="relative bg-background py-0">
+      <div className="grid items-stretch lg:grid-cols-2">
+        {/* Imagem full bleed à esquerda */}
+        <div className="relative h-[360px] lg:h-[520px]">
           <img
             src={cappuccinoImg}
             alt="Capuccino com cacau 55%"
-            width={1024}
-            height={1024}
+            width={1600}
+            height={1200}
             loading="lazy"
-            className="w-full rounded-2xl object-cover shadow-deep"
+            className="h-full w-full object-cover"
           />
         </div>
-        <div className="max-w-lg">
-          <span className="tag-copper">A experiência começa com</span>
-          <h2 className="mt-4 font-display text-4xl leading-tight text-foreground sm:text-5xl">
-            Capuccino
-            <br />
-            com cacau <span className="italic">55%</span>
-          </h2>
-          <span className="mt-6 block h-px w-24 bg-border" />
-          <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-            Cremoso, intenso e equilibrado.
-            <br />
-            O convite perfeito para desacelerar
-            <br />
-            e aproveitar o momento.
-          </p>
+
+        {/* Texto à direita */}
+        <div className="flex items-center px-6 py-16 lg:px-16 lg:py-0">
+          <div className="max-w-md">
+            <span className="tag-copper">A experiência começa com</span>
+            <h2 className="mt-5 font-display text-4xl italic leading-[1.1] text-foreground sm:text-5xl lg:text-[3.4rem]">
+              Capuccino
+              <br />
+              com cacau 55%
+            </h2>
+            <span className="mt-7 block h-px w-full bg-border" />
+            <p className="mt-7 text-[0.95rem] leading-relaxed text-muted-foreground">
+              Cremoso, intenso e equilibrado.
+              <br />
+              O convite perfeito para desacelerar
+              <br />
+              e aproveitar o momento.
+            </p>
+          </div>
         </div>
       </div>
     </section>
