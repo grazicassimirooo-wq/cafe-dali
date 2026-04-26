@@ -1,5 +1,5 @@
 import { MessageCircle } from "lucide-react";
-import logoMark from "@/assets/dali-mark.png";
+import { DaliLogo } from "@/components/DaliLogo";
 
 const NAV = [
   { label: "Menu Degustação", href: "#menu" },
@@ -13,15 +13,8 @@ export function Header() {
   return (
     <header className="absolute top-0 left-0 right-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
-        <a href="#" className="flex items-center gap-3">
-          <img
-            src={logoMark}
-            alt="Dali"
-            width={44}
-            height={44}
-            className="h-10 w-10 object-contain mix-blend-screen"
-          />
-          <span className="font-display text-2xl text-foreground">Dali</span>
+        <a href="#" className="flex items-center" aria-label="Dali Café & Experiências">
+          <DaliLogo size={56} showSlogan={false} showTagline={true} showDivider={true} />
         </a>
 
         <nav className="hidden items-center gap-8 lg:flex">
