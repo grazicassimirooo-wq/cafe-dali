@@ -1,6 +1,6 @@
 import { ShoppingBag, MessageCircle, Heart, Instagram, Facebook } from "lucide-react";
 import cafeImg from "@/assets/cafe-interior.jpg";
-import logoMark from "@/assets/dali-mark.png";
+import { DaliLogo } from "@/components/DaliLogo";
 
 export function Footer() {
   return (
@@ -65,15 +65,8 @@ export function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs uppercase tracking-[0.18em] text-muted-foreground sm:flex-row lg:px-10">
-          <div className="flex items-center gap-3">
-            <img
-              src={logoMark}
-              alt="Dali"
-              width={32}
-              height={32}
-              className="h-7 w-7 object-contain mix-blend-screen"
-            />
-            <span className="font-display text-lg normal-case tracking-normal text-foreground">Dali</span>
+          <div className="flex items-center">
+            <DaliLogo size={42} showSlogan={false} showTagline={false} showDivider={false} withGlow={false} />
           </div>
 
           <div className="flex items-center gap-4">
