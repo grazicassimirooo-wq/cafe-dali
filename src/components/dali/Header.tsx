@@ -14,7 +14,7 @@ export function Header() {
     <header className="absolute top-0 left-0 right-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-5 lg:px-10">
         <a href="#" className="flex items-center" aria-label="Dali Café & Experiências">
-          <DaliLogo size={56} />
+          <DaliLogo size={88} className="drop-shadow-[0_4px_18px_rgba(216,115,51,0.35)]" />
         </a>
 
         <nav className="hidden items-center gap-9 lg:flex">
