@@ -66,7 +66,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-xs uppercase tracking-[0.18em] text-muted-foreground sm:flex-row lg:px-10">
           <div className="flex items-center">
-            <DaliLogo size={28} />
+            <DaliLogo size={48} />
           </div>
 
           <div className="flex items-center gap-4">
