@@ -5,6 +5,7 @@ const NAV = [
   { label: "Menu Degustação", href: "#menu" },
   { label: "Lanches", href: "#lanches" },
   { label: "Boom Dali", href: "#boom" },
+  { label: "Clientes", href: "#clientes" },
   { label: "Sobre Nós", href: "#sobre" },
   { label: "Contato", href: "#contato" },
 ];
