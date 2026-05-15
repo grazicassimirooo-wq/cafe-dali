@@ -12,6 +12,7 @@ import { ReviewForm } from "@/components/dali/ReviewForm";
 import { Testimonials } from "@/components/dali/Testimonials";
 import { Footer } from "@/components/dali/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -36,22 +37,24 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main className="min-h-screen bg-background">
-      <TopBar />
-      <div className="relative">
-        <Header />
-        <Hero />
-      </div>
-      <MenuTasting />
-      <NossaHistoria />
-      <Cappuccino />
-      <Combinations />
-      <Snacks />
-      <BoomDali />
-      <ReviewForm />
-      <Testimonials />
-      <Footer />
-      <Toaster />
-    </main>
+    <AuthProvider>
+      <main className="min-h-screen bg-background">
+        <TopBar />
+        <div className="relative">
+          <Header />
+          <Hero />
+        </div>
+        <MenuTasting />
+        <NossaHistoria />
+        <Cappuccino />
+        <Combinations />
+        <Snacks />
+        <BoomDali />
+        <ReviewForm />
+        <Testimonials />
+        <Footer />
+        <Toaster />
+      </main>
+    </AuthProvider>
   );
 }
