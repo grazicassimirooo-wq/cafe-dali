@@ -5,18 +5,29 @@ import { DaliLogo } from "@/components/DaliLogo";
 export function Footer() {
   return (
     <footer id="contato" className="bg-background">
-      <section id="sobre" className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
         <div className="grid gap-8 lg:grid-cols-3">
-          {/* Coluna 1: imagem ambiente */}
-          <div className="overflow-hidden rounded-2xl shadow-deep">
+          {/* Coluna 1: imagem ambiente com overlay */}
+          <div className="relative overflow-hidden rounded-2xl shadow-deep">
             <img
               src={cafeImg}
-              alt="Ambiente da cafeteria Dali com letreiro neon"
+              alt="Ambiente da cafeteria Dali"
               width={1024}
               height={1100}
               loading="lazy"
-              className="h-full min-h-[320px] w-full object-cover"
+              className="h-full min-h-[340px] w-full object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+            <div className="absolute inset-x-0 bottom-0 p-6 text-center">
+              <p className="font-display text-xl italic text-foreground">
+                Um espaço feito
+                <br />
+                para você
+              </p>
+              <p className="mt-3 text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-copper">
+                Venha nos visitar
+              </p>
+            </div>
           </div>
 
           {/* Coluna 2: copy */}

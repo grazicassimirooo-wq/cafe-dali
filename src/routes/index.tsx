@@ -1,12 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { TopBar } from "@/components/dali/TopBar";
 import { Header } from "@/components/dali/Header";
 import { Hero } from "@/components/dali/Hero";
 import { MenuTasting } from "@/components/dali/MenuTasting";
+import { NossaHistoria } from "@/components/dali/NossaHistoria";
 import { Cappuccino } from "@/components/dali/Cappuccino";
 import { Combinations } from "@/components/dali/Combinations";
 import { Snacks } from "@/components/dali/Snacks";
 import { BoomDali } from "@/components/dali/BoomDali";
+import { ReviewForm } from "@/components/dali/ReviewForm";
+import { Testimonials } from "@/components/dali/Testimonials";
 import { Footer } from "@/components/dali/Footer";
+import { Toaster } from "@/components/ui/sonner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,14 +37,21 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main className="min-h-screen bg-background">
-      <Header />
-      <Hero />
+      <TopBar />
+      <div className="relative">
+        <Header />
+        <Hero />
+      </div>
       <MenuTasting />
+      <NossaHistoria />
       <Cappuccino />
       <Combinations />
       <Snacks />
       <BoomDali />
+      <ReviewForm />
+      <Testimonials />
       <Footer />
+      <Toaster />
     </main>
   );
 }

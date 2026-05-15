@@ -1,6 +1,6 @@
-import { Check, Soup, Clock, Heart } from "lucide-react";
-import boomImg from "@/assets/boom-package.jpg";
-import drinkImg from "@/assets/boom-drink.jpg";
+import { Check, FlaskConical, Clock, Heart } from "lucide-react";
+import boomImg from "@/assets/boom-dali.png";
+import modoImg from "@/assets/modo-preparo.png";
 
 const BENEFITS = [
   "Psyllium + chia + linhaça",
@@ -10,7 +10,7 @@ const BENEFITS = [
 ];
 
 const STEPS = [
-  { icon: Soup, label: "Misturou" },
+  { icon: FlaskConical, label: "Misturou" },
   { icon: Clock, label: "Esperou" },
   { icon: Heart, label: "Aproveitou" },
 ];
@@ -18,68 +18,69 @@ const STEPS = [
 export function BoomDali() {
   return (
     <section id="boom" className="py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-10">
-        <div className="grid overflow-hidden rounded-2xl shadow-deep lg:grid-cols-[1.1fr_0.9fr_1.2fr]">
-          {/* Block 1 — info */}
-          <div className="bg-card p-8 lg:p-10">
-            <span className="tag-copper">O queridinho da Dali</span>
-            <h3 className="mt-3 font-display text-4xl text-foreground">
-              BOOM <span className="italic">Dali</span>
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Energia, saciedade e equilíbrio em um só mix.
-            </p>
-            <ul className="mt-6 space-y-3">
-              {BENEFITS.map((b) => (
-                <li key={b} className="flex items-center gap-3 text-sm text-foreground/90">
-                  <Check className="text-copper" size={18} strokeWidth={2.4} />
-                  {b}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div className="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[1.1fr_0.9fr_1.4fr] lg:gap-12 lg:px-10">
+        {/* Bloco esquerda — copy */}
+        <div>
+          <span className="tag-copper">O queridinho da Dali</span>
+          <h3 className="mt-3 font-display text-4xl text-foreground sm:text-5xl">
+            BOOM <span className="italic">Dali</span>
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+            Energia, saciedade e equilíbrio em um só mix.
+          </p>
+          <ul className="mt-6 space-y-3">
+            {BENEFITS.map((b) => (
+              <li key={b} className="flex items-center gap-3 text-sm text-foreground/90">
+                <Check className="text-copper" size={18} strokeWidth={2.4} />
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-          {/* Block 2 — package */}
-          <div className="relative bg-card flex items-center justify-center p-6 lg:border-x lg:border-border">
-            <img
-              src={boomImg}
-              alt="Embalagem BOOM Dali"
-              width={800}
-              height={1100}
-              loading="lazy"
-              className="max-h-[420px] w-auto object-contain"
-            />
-          </div>
+        {/* Bloco centro — produto */}
+        <div className="flex items-center justify-center">
+          <img
+            src={boomImg}
+            alt="Embalagem BOOM Dali"
+            width={700}
+            height={900}
+            loading="lazy"
+            className="max-h-[380px] w-auto object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)]"
+          />
+        </div>
 
-          {/* Block 3 — modo de uso */}
-          <div className="relative bg-sand p-8 lg:p-10">
-            <span className="text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-copper">
+        {/* Bloco direita — modo de uso */}
+        <div className="grid grid-cols-1 overflow-hidden rounded-2xl bg-cream text-cream-foreground sm:grid-cols-[1fr_0.8fr]">
+          <div className="p-6 lg:p-8">
+            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.22em] text-copper">
               Modo de uso
             </span>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-sand-foreground/85">
-              Misture com água, suco ou iogurte (100-150ml), aguarde alguns minutos… e aproveite.
+            <p className="mt-3 text-sm leading-relaxed text-cream-foreground/85">
+              Misture com água, suco ou iogurte (100-150ml), aguarde alguns
+              minutos… e aproveite.
             </p>
-            <div className="mt-8 grid grid-cols-3 gap-4 max-w-xs">
+            <div className="mt-7 grid grid-cols-3 gap-3">
               {STEPS.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex flex-col items-center text-center">
-                  <span className="grid h-12 w-12 place-items-center rounded-full border border-copper/50 text-copper">
-                    <Icon size={20} strokeWidth={1.6} />
+                  <span className="grid h-11 w-11 place-items-center rounded-full border border-copper/60 text-copper">
+                    <Icon size={18} strokeWidth={1.6} />
                   </span>
-                  <span className="mt-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-sand-foreground">
+                  <span className="mt-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-cream-foreground">
                     {label}
                   </span>
                 </div>
               ))}
             </div>
-            <img
-              src={drinkImg}
-              alt="Boom Dali pronto"
-              width={700}
-              height={1100}
-              loading="lazy"
-              className="absolute right-0 top-0 hidden h-full w-32 object-cover lg:block"
-            />
           </div>
+          <img
+            src={modoImg}
+            alt="Modo de preparo BOOM Dali"
+            width={600}
+            height={800}
+            loading="lazy"
+            className="h-full w-full object-cover"
+          />
         </div>
       </div>
     </section>

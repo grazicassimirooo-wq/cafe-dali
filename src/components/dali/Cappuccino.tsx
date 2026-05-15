@@ -1,4 +1,4 @@
-import cappuccinoImg from "@/assets/cappuccino.jpg";
+import cappuccinoImg from "@/assets/cappuccino-cacau.png";
 
 export function Cappuccino() {
   return (
