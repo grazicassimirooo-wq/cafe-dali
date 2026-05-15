@@ -30,8 +30,8 @@ export function BoomDali() {
           </p>
           <ul className="mt-6 space-y-3">
             {BENEFITS.map((b) => (
-              <li key={b} className="flex items-center gap-3 text-sm text-foreground/90">
-                <Check className="text-copper" size={18} strokeWidth={2.4} />
+              <li key={b} className="group flex cursor-default items-center gap-3 text-sm text-foreground/90 transition-all duration-200 hover:text-copper hover:translate-x-1">
+                <Check className="shrink-0 text-copper transition-all duration-200 group-hover:drop-shadow-[0_0_6px_rgba(217,114,39,0.8)] group-hover:scale-110" size={18} strokeWidth={2.4} />
                 {b}
               </li>
             ))}
@@ -40,14 +40,16 @@ export function BoomDali() {
 
         {/* Bloco centro — produto */}
         <div className="flex items-center justify-center">
-          <div className="group relative">
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-0 rounded-full"
+              style={{background: "radial-gradient(circle, rgba(217,114,39,0.2) 0%, transparent 70%)", filter: "blur(40px)", transform: "scale(1.3)"}} />
             <img
               src={boomImg}
               alt="Embalagem BOOM Dali"
               width={700}
               height={900}
               loading="lazy"
-              className="max-h-[520px] w-auto object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)] transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_24px_60px_rgba(217,114,39,0.35)]"
+              className="float-gentle relative max-h-[560px] w-auto object-contain drop-shadow-[0_24px_60px_rgba(217,114,39,0.25)]"
             />
           </div>
         </div>

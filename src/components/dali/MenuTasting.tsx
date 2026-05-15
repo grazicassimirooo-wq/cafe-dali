@@ -27,7 +27,7 @@ export function MenuTasting() {
         <div className="max-w-md">
           <span className="tag-copper">Menu Degustação Dali</span>
           <h2 className="mt-4 font-display text-3xl leading-tight text-foreground sm:text-4xl lg:text-[2.6rem]">
-            Um novo jeito de viver o café da manhã e o lanche da tarde.
+            Um novo jeito de viver o <span className="italic text-gradient-copper">café da manhã</span> e o lanche da tarde.
           </h2>
           <p className="mt-6 text-[0.95rem] leading-relaxed text-muted-foreground">
             Criamos o Menu Degustação Dali para transformar pausas simples em experiências memoráveis.
@@ -46,29 +46,28 @@ export function MenuTasting() {
                 key={title}
                 type="button"
                 onClick={() => setSelected(isSelected ? null : title)}
-                className={`group flex flex-col items-center rounded-2xl border p-5 text-center transition-all duration-700 active:scale-95
+                className={`group flex flex-col items-center rounded-2xl border p-5 text-center transition-all duration-700 active:scale-95 focus:outline-none
                   ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}
                   ${isSelected
-                    ? "scale-110 border-copper bg-copper/5 shadow-[0_0_32px_rgba(217,114,39,0.6)]"
-                    : "border-transparent hover:scale-105 hover:border-copper/40 hover:bg-copper/5 hover:shadow-[0_0_20px_rgba(217,114,39,0.3)]"
+                    ? "scale-110 border-copper bg-copper/5 shadow-[0_0_32px_rgba(217,114,39,0.6),inset_0_0_20px_rgba(217,114,39,0.05)]"
+                    : "border-transparent hover:scale-105 hover:border-copper/40 hover:bg-copper/5 hover:shadow-[0_0_24px_rgba(217,114,39,0.3)]"
                   }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className={`flex items-center justify-center rounded-full p-3 transition-all duration-300
-                  ${isSelected ? "bg-copper/20 shadow-[0_0_18px_rgba(217,114,39,0.7)]" : "group-hover:bg-copper/10"}`}
-                >
+                  ${isSelected ? "bg-copper/20 shadow-[0_0_20px_rgba(217,114,39,0.7)]" : "group-hover:bg-copper/10"}`}>
                   <Icon
                     className={`transition-all duration-500
                       ${visible ? "scale-100" : "scale-75"}
                       ${isSelected
-                        ? "text-copper drop-shadow-[0_0_10px_rgba(217,114,39,1)]"
-                        : "text-copper group-hover:drop-shadow-[0_0_8px_rgba(217,114,39,0.7)]"
-                      }`}
+                        ? "text-copper drop-shadow-[0_0_12px_rgba(217,114,39,1)]"
+                        : "text-copper group-hover:drop-shadow-[0_0_10px_rgba(217,114,39,0.7)]"}`}
                     size={42}
                     strokeWidth={1.4}
                   />
                 </div>
-                <h3 className="mt-4 font-sans-body text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
+                <h3 className={`mt-4 font-sans-body text-xs font-semibold uppercase tracking-[0.2em] transition-all duration-300
+                  ${isSelected ? "text-copper drop-shadow-[0_0_8px_rgba(217,114,39,0.7)] tracking-[0.25em]" : "text-foreground group-hover:text-copper"}`}>
                   {title}
                 </h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>

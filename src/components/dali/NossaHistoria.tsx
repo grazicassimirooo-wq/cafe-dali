@@ -1,15 +1,29 @@
+import { useRef, useState, useEffect } from "react";
 import { DaliLogo } from "@/components/DaliLogo";
 
 export function NossaHistoria() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="sobre" className="bg-card/40 py-20 lg:py-24">
-      <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
-        <div>
+    <section id="sobre" className="bg-card/40 py-20 lg:py-28">
+      <div ref={ref} className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
+        {/* Texto */}
+        <div className={`transition-all duration-700 ${visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
           <span className="tag-copper">Sobre Nós</span>
           <h2 className="mt-4 font-display text-4xl text-foreground sm:text-5xl">
-            Nossa História
+            Nossa <span className="italic text-gradient-copper">História</span>
           </h2>
-          <span className="mt-5 block h-[2px] w-16 bg-copper" />
+          <span className="mt-5 block h-[2px] w-16 bg-gradient-to-r from-copper to-transparent" />
           <div className="mt-8 space-y-5 text-[0.95rem] leading-relaxed text-muted-foreground">
             <p>
               A Dali nasceu de um amor profundo pelo café e pela experiência de
@@ -31,10 +45,29 @@ export function NossaHistoria() {
           </p>
         </div>
 
-        <div className="relative flex items-center justify-center">
-          <div className="relative grid h-[320px] w-[320px] place-items-center rounded-full border border-copper/40 sm:h-[420px] sm:w-[420px]">
+        {/* Logo com anéis animados */}
+        <div className={`relative flex items-center justify-center transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
+          {/* Anel externo pulsante */}
+          <div className="absolute h-[420px] w-[420px] rounded-full border border-copper/20 sm:h-[480px] sm:w-[480px]"
+            style={{animation: "pulse-ring 3s ease-out infinite"}} />
+          <div className="absolute h-[420px] w-[420px] rounded-full border border-copper/10 sm:h-[480px] sm:w-[480px]"
+            style={{animation: "pulse-ring 3s ease-out infinite", animationDelay: "1s"}} />
+
+          {/* Anel rotativo */}
+          <div className="absolute h-[360px] w-[360px] rounded-full sm:h-[420px] sm:w-[420px]"
+            style={{
+              border: "1px dashed oklch(0.68 0.165 45 / 0.25)",
+              animation: "spin-slow 20s linear infinite"
+            }} />
+
+          {/* Círculo principal */}
+          <div className="relative grid h-[280px] w-[280px] place-items-center rounded-full border border-copper/40 sm:h-[340px] sm:w-[340px]"
+            style={{boxShadow: "0 0 60px rgba(217,114,39,0.12), inset 0 0 40px rgba(217,114,39,0.05)"}}>
             <div className="absolute inset-6 rounded-full border border-copper/20" />
-            <DaliLogo size={140} className="relative drop-shadow-[0_4px_24px_rgba(216,115,51,0.4)]" />
+            <DaliLogo
+              size={140}
+              className="relative glow-pulse drop-shadow-[0_4px_32px_rgba(216,115,51,0.5)]"
+            />
           </div>
         </div>
       </div>
