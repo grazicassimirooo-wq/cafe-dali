@@ -149,3 +149,75 @@
     background: var(--copper);
   }
 }
+
+/* ─── Hero Animations ─────────────────────────────────────────── */
+
+@keyframes heroKenBurns {
+  0%   { transform: scale(1.06) translate(0%, 0%); }
+  40%  { transform: scale(1.12) translate(-1.5%, -1%); }
+  100% { transform: scale(1.06) translate(0%, 0%); }
+}
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heroSlideIn {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes copperShimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes badgePulse {
+  0%, 100% { box-shadow: 0 0 0 0 oklch(0.68 0.165 45 / 0.35); }
+  50%       { box-shadow: 0 0 0 8px oklch(0.68 0.165 45 / 0); }
+}
+
+@keyframes dividerGrow {
+  from { width: 0; opacity: 0; }
+  to   { width: 64px; opacity: 1; }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.7); }
+}
+
+/* Aplicação das animações */
+.hero-video       { animation: heroKenBurns 22s ease-in-out infinite; }
+.hero-eyebrow     { animation: heroSlideIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both; }
+.hero-title       { animation: heroFadeUp  1s  cubic-bezier(0.22, 1, 0.36, 1) 0.45s both; }
+.hero-divider     { animation: dividerGrow 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.85s both; }
+.hero-subtitle    { animation: heroFadeUp  0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.0s  both; }
+.hero-ctas        { animation: heroFadeUp  0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.2s  both; }
+.hero-badge       { animation: heroFadeUp  0.9s cubic-bezier(0.22, 1, 0.36, 1) 1.4s  both,
+                               badgeFloat  4s  ease-in-out 2.5s infinite; }
+
+.copper-shimmer {
+  background-image: linear-gradient(
+    105deg,
+    oklch(0.68 0.165 45) 0%,
+    oklch(0.88 0.13 65) 35%,
+    oklch(0.96 0.08 75) 50%,
+    oklch(0.88 0.13 65) 65%,
+    oklch(0.68 0.165 45) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: copperShimmer 4s linear 1.5s infinite;
+}
+
+.dot-pulse { animation: dotPulse 2s ease-in-out infinite; }
+.badge-pulse { animation: badgePulse 2.5s ease-in-out infinite; }
