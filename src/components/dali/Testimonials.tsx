@@ -65,7 +65,7 @@ export function Testimonials() {
             <div className="flex gap-5">
               {REVIEWS.map((r) => (
                 <div key={r.name} className="flex-none w-full sm:w-1/2 lg:w-1/3 min-w-0">
-                  <article className="flex flex-col rounded-2xl border border-border bg-card p-6 shadow-deep/30 h-full">
+                  <article className="card-glass flex flex-col rounded-2xl p-6 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(217,114,39,0.2)]">
                     <div className="flex gap-1">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star key={i} size={16} className="fill-copper text-copper" />

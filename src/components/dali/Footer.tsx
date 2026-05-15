@@ -65,7 +65,7 @@ export function Footer() {
             </ul>
             <a
               href="https://wa.me/"
-              className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-copper px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground shadow-copper transition-transform hover:scale-[1.02]"
+              className="btn-shimmer mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-copper px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground shadow-copper transition-transform hover:scale-[1.02]"
             >
               Faça seu pedido
               <MessageCircle size={16} strokeWidth={2.2} />
