@@ -18,6 +18,7 @@ export type MenuItem = {
   category: MenuCategory;
   label: string;
   active: boolean;
+  price?: string;
 };
 
 export type DailyItem = {
@@ -25,6 +26,7 @@ export type DailyItem = {
   name: string;
   description: string;
   available: boolean;
+  price?: string;
 };
 
 // Reviews
@@ -63,11 +65,11 @@ export function deleteReview(id: string) {
 
 // Daily Menu
 const DEFAULT_DAILY: DailyItem[] = [
-  { id: "d1", name: "Bisnaguinha de cenoura com creme de avelã", description: "", available: true },
-  { id: "d2", name: "Bisnaguinha integral com creme de queijo e ervas", description: "", available: true },
-  { id: "d3", name: "Bisnaguinha com patê", description: "", available: true },
-  { id: "d4", name: "Baguete de leite com salpicão", description: "", available: false },
-  { id: "d5", name: "Baguete natural (peito de peru, queijo, alface e tomate)", description: "", available: true },
+  { id: "d1", name: "Bisnaguinha de cenoura com creme de avelã", description: "", available: true, price: "" },
+  { id: "d2", name: "Bisnaguinha integral com creme de queijo e ervas", description: "", available: true, price: "" },
+  { id: "d3", name: "Bisnaguinha com patê", description: "", available: true, price: "" },
+  { id: "d4", name: "Baguete de leite com salpicão", description: "", available: false, price: "" },
+  { id: "d5", name: "Baguete natural (peito de peru, queijo, alface e tomate)", description: "", available: true, price: "" },
 ];
 
 export function getDailyMenu(): DailyItem[] {
@@ -85,17 +87,17 @@ export function saveDailyMenu(items: DailyItem[]) {
 
 // Menu Items
 const DEFAULT_MENU_ITEMS: MenuItem[] = [
-  { id: "f1", category: "fresh", label: "Água saborizada", active: true },
-  { id: "f2", category: "fresh", label: "Iogurte com geleia e granola", active: true },
-  { id: "f3", category: "fresh", label: "Mix de frutas com oleaginosas", active: true },
-  { id: "s1", category: "daily", label: "Bisnaguinha de cenoura com creme de avelã", active: true },
-  { id: "s2", category: "daily", label: "Bisnaguinha integral com creme de queijo e ervas", active: true },
-  { id: "s3", category: "daily", label: "Bisnaguinha com patê", active: true },
-  { id: "s4", category: "daily", label: "Baguete de leite com salpicão", active: true },
-  { id: "s5", category: "daily", label: "Baguete natural (peito de peru, queijo, alface e tomate)", active: true },
-  { id: "c1", category: "combo", label: "Biscoito de arroz com geleia de frutas vermelhas", active: true },
-  { id: "c2", category: "combo", label: "Torrada de cacau com creme de amendoim", active: true },
-  { id: "c3", category: "combo", label: "Seleção de biscoitos artesanais", active: true },
+  { id: "f1", category: "fresh", label: "Água saborizada", active: true, price: "" },
+  { id: "f2", category: "fresh", label: "Iogurte com geleia e granola", active: true, price: "" },
+  { id: "f3", category: "fresh", label: "Mix de frutas com oleaginosas", active: true, price: "" },
+  { id: "s1", category: "daily", label: "Bisnaguinha de cenoura com creme de avelã", active: true, price: "" },
+  { id: "s2", category: "daily", label: "Bisnaguinha integral com creme de queijo e ervas", active: true, price: "" },
+  { id: "s3", category: "daily", label: "Bisnaguinha com patê", active: true, price: "" },
+  { id: "s4", category: "daily", label: "Baguete de leite com salpicão", active: true, price: "" },
+  { id: "s5", category: "daily", label: "Baguete natural (peito de peru, queijo, alface e tomate)", active: true, price: "" },
+  { id: "c1", category: "combo", label: "Biscoito de arroz com geleia de frutas vermelhas", active: true, price: "" },
+  { id: "c2", category: "combo", label: "Torrada de cacau com creme de amendoim", active: true, price: "" },
+  { id: "c3", category: "combo", label: "Seleção de biscoitos artesanais", active: true, price: "" },
 ];
 
 export function getMenuItems(): MenuItem[] {
