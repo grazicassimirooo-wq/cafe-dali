@@ -20,8 +20,8 @@ export function Combinations() {
 
         <div className="mt-14 grid gap-10 sm:grid-cols-3">
           {ITEMS.map((item) => (
-            <article key={item.label} className="flex flex-col items-center text-center group transition-all duration-300 hover:-translate-y-1">
-              <div className="w-full overflow-hidden rounded-xl">
+            <article key={item.label} className="group flex flex-col items-center text-center transition-all duration-300 hover:-translate-y-2">
+              <div className="relative w-full overflow-hidden rounded-xl transition-all duration-300 group-hover:shadow-[0_0_28px_rgba(217,114,39,0.4)] group-hover:ring-2 group-hover:ring-copper/60">
                 <img
                   src={item.img}
                   alt={item.label}
@@ -31,7 +31,7 @@ export function Combinations() {
                   className="aspect-[4/3] w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110"
                 />
               </div>
-              <p className="mt-5 max-w-[22ch] font-display text-base leading-snug text-cream-foreground">
+              <p className="mt-5 max-w-[22ch] font-display text-base leading-snug text-cream-foreground transition-colors duration-300 group-hover:text-copper">
                 {item.label}
               </p>
             </article>

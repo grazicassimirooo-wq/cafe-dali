@@ -40,14 +40,16 @@ export function BoomDali() {
 
         {/* Bloco centro — produto */}
         <div className="flex items-center justify-center">
-          <img
-            src={boomImg}
-            alt="Embalagem BOOM Dali"
-            width={700}
-            height={900}
-            loading="lazy"
-            className="max-h-[380px] w-auto object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)]"
-          />
+          <div className="group relative">
+            <img
+              src={boomImg}
+              alt="Embalagem BOOM Dali"
+              width={700}
+              height={900}
+              loading="lazy"
+              className="max-h-[520px] w-auto object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.55)] transition-all duration-500 group-hover:scale-105 group-hover:drop-shadow-[0_24px_60px_rgba(217,114,39,0.35)]"
+            />
+          </div>
         </div>
 
         {/* Bloco direita — modo de uso */}
