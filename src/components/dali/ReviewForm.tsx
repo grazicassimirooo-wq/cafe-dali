@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Send, Star } from "lucide-react";
 import { toast } from "sonner";
+import { saveReview } from "@/lib/store";
 
 export function ReviewForm() {
   const [rating, setRating] = useState(0);
@@ -14,6 +15,7 @@ export function ReviewForm() {
       toast.error("Preencha todos os campos e dê sua nota.");
       return;
     }
+    saveReview({ name: name.trim(), text: text.trim(), rating });
     toast.success("Obrigado pela sua avaliação!");
     setRating(0);
     setName("");
