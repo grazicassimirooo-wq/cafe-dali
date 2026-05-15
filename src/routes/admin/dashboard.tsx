@@ -14,10 +14,11 @@ import {
   BookOpen,
   MessageSquare,
   ChevronLeft,
+  Loader2,
 } from "lucide-react";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import {
-  isAdminAuthenticated,
-  clearAdminAuth,
   getReviews,
   deleteReview,
   updateReview,
@@ -41,16 +42,32 @@ type Tab = "reviews" | "daily" | "menu";
 function AdminDashboard() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<Tab>("reviews");
+  const [checking, setChecking] = useState(true);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAdminAuthenticated()) {
-      navigate({ to: "/admin/" });
-    }
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        navigate({ to: "/admin/" });
+      } else {
+        setUserEmail(user.email);
+        setChecking(false);
+      }
+    });
+    return unsub;
   }, [navigate]);
 
-  function handleLogout() {
-    clearAdminAuth();
+  async function handleLogout() {
+    await signOut(auth);
     navigate({ to: "/admin/" });
+  }
+
+  if (checking) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <Loader2 size={24} className="animate-spin text-copper" />
+      </div>
+    );
   }
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
@@ -73,13 +90,20 @@ function AdminDashboard() {
               Admin
             </span>
           </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <LogOut size={14} />
-            Sair
-          </button>
+          <div className="flex items-center gap-3">
+            {userEmail && (
+              <span className="hidden text-xs text-muted-foreground sm:inline">
+                {userEmail}
+              </span>
+            )}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <LogOut size={14} />
+              Sair
+            </button>
+          </div>
         </div>
       </header>
 

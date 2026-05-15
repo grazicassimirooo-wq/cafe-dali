@@ -1,7 +1,6 @@
 const REVIEWS_KEY = "dali_reviews";
 const DAILY_MENU_KEY = "dali_daily_menu";
 const MENU_ITEMS_KEY = "dali_menu_items";
-const AUTH_KEY = "dali_admin_auth";
 
 export type Review = {
   id: string;
@@ -27,21 +26,6 @@ export type DailyItem = {
   description: string;
   available: boolean;
 };
-
-export const ADMIN_PASSWORD = "dali2024";
-
-export function setAdminAuth() {
-  localStorage.setItem(AUTH_KEY, "true");
-}
-
-export function clearAdminAuth() {
-  localStorage.removeItem(AUTH_KEY);
-}
-
-export function isAdminAuthenticated(): boolean {
-  if (typeof window === "undefined") return false;
-  return localStorage.getItem(AUTH_KEY) === "true";
-}
 
 // Reviews
 export function getReviews(): Review[] {
