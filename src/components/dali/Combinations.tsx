@@ -20,15 +20,15 @@ export function Combinations() {
 
         <div className="mt-14 grid gap-10 sm:grid-cols-3">
           {ITEMS.map((item) => (
-            <article key={item.label} className="flex flex-col items-center text-center">
-              <div className="w-full overflow-hidden">
+            <article key={item.label} className="flex flex-col items-center text-center group transition-all duration-300 hover:-translate-y-1">
+              <div className="w-full overflow-hidden rounded-xl">
                 <img
                   src={item.img}
                   alt={item.label}
                   width={800}
                   height={600}
                   loading="lazy"
-                  className="aspect-[4/3] w-full object-contain"
+                  className="aspect-[4/3] w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110"
                 />
               </div>
               <p className="mt-5 max-w-[22ch] font-display text-base leading-snug text-cream-foreground">

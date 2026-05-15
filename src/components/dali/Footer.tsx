@@ -1,6 +1,7 @@
-import { ShoppingBag, MessageCircle, Heart, Instagram, Facebook } from "lucide-react";
+import { ShoppingBag, MessageCircle, Heart, Instagram, Facebook, Settings } from "lucide-react";
 import cafeImg from "@/assets/cafe-interior.jpg";
 import { DaliLogo } from "@/components/DaliLogo";
+import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   return (
@@ -88,6 +89,9 @@ export function Footer() {
             <a href="#" aria-label="Facebook" className="text-foreground/80 transition-colors hover:text-copper">
               <Facebook size={16} />
             </a>
+            <Link to="/admin/" aria-label="Admin" title="Área admin" className="ml-2 text-foreground/30 transition-colors hover:text-copper">
+              <Settings size={14} />
+            </Link>
           </div>
 
           <div className="flex items-center gap-2">

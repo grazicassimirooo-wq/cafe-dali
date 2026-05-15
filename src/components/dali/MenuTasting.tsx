@@ -1,4 +1,5 @@
 import { Coffee, Heart, Leaf } from "lucide-react";
+import { useRef, useState, useEffect } from "react";
 
 const PILLARS = [
   { icon: Coffee, title: "Sabor", text: "Ingredientes selecionados para despertar sentidos." },
@@ -7,6 +8,18 @@ const PILLARS = [
 ];
 
 export function MenuTasting() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.2 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="menu" className="relative py-20 lg:py-28">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_auto_1.1fr] lg:px-10">
@@ -24,10 +37,18 @@ export function MenuTasting() {
 
         <div className="hidden w-px bg-border lg:block" aria-hidden />
 
-        <div className="grid gap-8 sm:grid-cols-3">
-          {PILLARS.map(({ icon: Icon, title, text }) => (
-            <div key={title} className="flex flex-col items-center text-center">
-              <Icon className="text-copper" size={42} strokeWidth={1.4} />
+        <div ref={sectionRef} className="grid gap-8 sm:grid-cols-3">
+          {PILLARS.map(({ icon: Icon, title, text }, index) => (
+            <div
+              key={title}
+              className={`flex flex-col items-center text-center transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+              style={{ transitionDelay: `${index * 150}ms` }}
+            >
+              <Icon
+                className={`text-copper transition-transform duration-500 ${visible ? "scale-100" : "scale-75"}`}
+                size={42}
+                strokeWidth={1.4}
+              />
               <h3 className="mt-5 font-sans-body text-xs font-semibold uppercase tracking-[0.2em] text-foreground">
                 {title}
               </h3>

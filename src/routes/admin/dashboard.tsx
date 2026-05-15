@@ -267,8 +267,10 @@ function DailyMenuTab() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
   const [editDesc, setEditDesc] = useState("");
+  const [editPrice, setEditPrice] = useState("");
   const [newName, setNewName] = useState("");
   const [newDesc, setNewDesc] = useState("");
+  const [newPrice, setNewPrice] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -294,12 +296,13 @@ function DailyMenuTab() {
     setEditingId(item.id);
     setEditName(item.name);
     setEditDesc(item.description);
+    setEditPrice(item.price ?? "");
   }
 
   function commitEdit() {
     if (!editName.trim() || !editingId) return;
     const updated = items.map((i) =>
-      i.id === editingId ? { ...i, name: editName.trim(), description: editDesc.trim() } : i
+      i.id === editingId ? { ...i, name: editName.trim(), description: editDesc.trim(), price: editPrice.trim() } : i
     );
     persist(updated);
     setEditingId(null);
@@ -320,10 +323,12 @@ function DailyMenuTab() {
       name: newName.trim(),
       description: newDesc.trim(),
       available: true,
+      price: newPrice.trim(),
     };
     persist([...items, item]);
     setNewName("");
     setNewDesc("");
+    setNewPrice("");
     setShowAdd(false);
   }
 
@@ -370,6 +375,13 @@ function DailyMenuTab() {
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
             placeholder="Descrição (opcional)"
+            className="mb-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
+          />
+          <input
+            type="text"
+            value={newPrice}
+            onChange={(e) => setNewPrice(e.target.value)}
+            placeholder="R$ 0,00"
             className="mb-3 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
           />
           <div className="flex gap-2">
@@ -380,7 +392,7 @@ function DailyMenuTab() {
               <Check size={13} /> Confirmar
             </button>
             <button
-              onClick={() => { setShowAdd(false); setNewName(""); setNewDesc(""); }}
+              onClick={() => { setShowAdd(false); setNewName(""); setNewDesc(""); setNewPrice(""); }}
               className="flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs text-muted-foreground"
             >
               <X size={13} /> Cancelar
@@ -411,6 +423,13 @@ function DailyMenuTab() {
                   value={editDesc}
                   onChange={(e) => setEditDesc(e.target.value)}
                   placeholder="Descrição (opcional)"
+                  className="mb-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
+                />
+                <input
+                  type="text"
+                  value={editPrice}
+                  onChange={(e) => setEditPrice(e.target.value)}
+                  placeholder="R$ 0,00"
                   className="mb-3 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
                 />
                 <div className="flex gap-2">
@@ -440,9 +459,14 @@ function DailyMenuTab() {
                   title={item.available ? "Disponível" : "Indisponível"}
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-foreground leading-snug">
-                    {item.name}
-                  </p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="text-sm font-medium text-foreground leading-snug">
+                      {item.name}
+                    </p>
+                    {item.price && (
+                      <span className="text-xs font-semibold text-copper">{item.price}</span>
+                    )}
+                  </div>
                   {item.description && (
                     <p className="text-xs text-muted-foreground mt-0.5">
                       {item.description}
@@ -488,8 +512,10 @@ function MenuTab() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editLabel, setEditLabel] = useState("");
+  const [editPrice, setEditPrice] = useState("");
   const [showAdd, setShowAdd] = useState(false);
   const [newLabel, setNewLabel] = useState("");
+  const [newPrice, setNewPrice] = useState("");
   const [newCategory, setNewCategory] = useState<MenuCategory>("daily");
   const [saved, setSaved] = useState(false);
 
@@ -511,11 +537,12 @@ function MenuTab() {
   function startEdit(item: MenuItem) {
     setEditingId(item.id);
     setEditLabel(item.label);
+    setEditPrice(item.price ?? "");
   }
 
   function commitEdit() {
     if (!editLabel.trim() || !editingId) return;
-    persist(items.map((i) => (i.id === editingId ? { ...i, label: editLabel.trim() } : i)));
+    persist(items.map((i) => (i.id === editingId ? { ...i, label: editLabel.trim(), price: editPrice.trim() } : i)));
     setEditingId(null);
   }
 
@@ -530,9 +557,11 @@ function MenuTab() {
       category: newCategory,
       label: newLabel.trim(),
       active: true,
+      price: newPrice.trim(),
     };
     persist([...items, item]);
     setNewLabel("");
+    setNewPrice("");
     setShowAdd(false);
   }
 
@@ -588,8 +617,15 @@ function MenuTab() {
             value={newLabel}
             onChange={(e) => setNewLabel(e.target.value)}
             placeholder="Nome do item"
-            className="mb-3 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
+            className="mb-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
             autoFocus
+          />
+          <input
+            type="text"
+            value={newPrice}
+            onChange={(e) => setNewPrice(e.target.value)}
+            placeholder="R$ 0,00"
+            className="mb-3 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
           />
           <div className="flex gap-2">
             <button
@@ -599,7 +635,7 @@ function MenuTab() {
               <Check size={13} /> Confirmar
             </button>
             <button
-              onClick={() => { setShowAdd(false); setNewLabel(""); }}
+              onClick={() => { setShowAdd(false); setNewLabel(""); setNewPrice(""); }}
               className="flex items-center gap-1 rounded-md border border-border px-3 py-1.5 text-xs text-muted-foreground"
             >
               <X size={13} /> Cancelar
@@ -630,30 +666,41 @@ function MenuTab() {
                       }`}
                     >
                       {editingId === item.id ? (
-                        <div className="flex gap-2">
-                          <input
-                            type="text"
-                            value={editLabel}
-                            onChange={(e) => setEditLabel(e.target.value)}
-                            className="flex-1 rounded-md border border-border bg-background px-3 py-1.5 text-sm focus:border-copper focus:outline-none"
-                            autoFocus
-                            onKeyDown={(e) => {
-                              if (e.key === "Enter") commitEdit();
-                              if (e.key === "Escape") setEditingId(null);
-                            }}
-                          />
-                          <button
-                            onClick={commitEdit}
-                            className="rounded-md bg-copper px-2.5 py-1.5 text-primary-foreground"
-                          >
-                            <Check size={14} />
-                          </button>
-                          <button
-                            onClick={() => setEditingId(null)}
-                            className="rounded-md border border-border px-2.5 py-1.5 text-muted-foreground"
-                          >
-                            <X size={14} />
-                          </button>
+                        <div>
+                          <div className="flex gap-2 mb-2">
+                            <input
+                              type="text"
+                              value={editLabel}
+                              onChange={(e) => setEditLabel(e.target.value)}
+                              className="flex-1 rounded-md border border-border bg-background px-3 py-1.5 text-sm focus:border-copper focus:outline-none"
+                              autoFocus
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") commitEdit();
+                                if (e.key === "Escape") setEditingId(null);
+                              }}
+                            />
+                          </div>
+                          <div className="flex gap-2">
+                            <input
+                              type="text"
+                              value={editPrice}
+                              onChange={(e) => setEditPrice(e.target.value)}
+                              placeholder="R$ 0,00"
+                              className="flex-1 rounded-md border border-border bg-background px-3 py-1.5 text-sm focus:border-copper focus:outline-none"
+                            />
+                            <button
+                              onClick={commitEdit}
+                              className="rounded-md bg-copper px-2.5 py-1.5 text-primary-foreground"
+                            >
+                              <Check size={14} />
+                            </button>
+                            <button
+                              onClick={() => setEditingId(null)}
+                              className="rounded-md border border-border px-2.5 py-1.5 text-muted-foreground"
+                            >
+                              <X size={14} />
+                            </button>
+                          </div>
                         </div>
                       ) : (
                         <div className="flex items-center gap-3">
@@ -665,9 +712,14 @@ function MenuTab() {
                                 : "border-muted-foreground/40 bg-transparent"
                             }`}
                           />
-                          <span className="flex-1 text-sm text-foreground leading-snug">
-                            {item.label}
-                          </span>
+                          <div className="flex flex-1 items-center gap-2 flex-wrap">
+                            <span className="text-sm text-foreground leading-snug">
+                              {item.label}
+                            </span>
+                            {item.price && (
+                              <span className="text-xs font-semibold text-copper">{item.price}</span>
+                            )}
+                          </div>
                           <div className="flex gap-1 shrink-0">
                             <button
                               onClick={() => startEdit(item)}
