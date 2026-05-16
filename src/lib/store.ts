@@ -112,3 +112,38 @@ export function getMenuItems(): MenuItem[] {
 export function saveMenuItems(items: MenuItem[]) {
   localStorage.setItem(MENU_ITEMS_KEY, JSON.stringify(items));
 }
+
+// Images
+const IMAGES_KEY = "dali_images";
+
+export type ImageCategory = "combo" | "fresh" | "hero" | "banner";
+
+export type ImageItem = {
+  id: string;
+  category: ImageCategory;
+  src: string; // base64 data URL or external URL/MP4 URL
+  label: string;
+  createdAt: string;
+};
+
+export function getImages(): ImageItem[] {
+  try {
+    return JSON.parse(localStorage.getItem(IMAGES_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+export function saveImages(items: ImageItem[]) {
+  localStorage.setItem(IMAGES_KEY, JSON.stringify(items));
+}
+
+export function addImage(item: Omit<ImageItem, "id" | "createdAt">) {
+  const images = getImages();
+  images.unshift({ ...item, id: crypto.randomUUID(), createdAt: new Date().toISOString() });
+  localStorage.setItem(IMAGES_KEY, JSON.stringify(images));
+}
+
+export function deleteImage(id: string) {
+  saveImages(getImages().filter((i) => i.id !== id));
+}

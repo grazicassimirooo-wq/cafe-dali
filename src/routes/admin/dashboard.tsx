@@ -15,6 +15,9 @@ import {
   MessageSquare,
   ChevronLeft,
   Loader2,
+  ImageIcon,
+  Link as LinkIcon,
+  Upload,
 } from "lucide-react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
@@ -26,10 +29,15 @@ import {
   saveDailyMenu,
   getMenuItems,
   saveMenuItems,
+  getImages,
+  addImage,
+  deleteImage,
   type Review,
   type DailyItem,
   type MenuItem,
   type MenuCategory,
+  type ImageItem,
+  type ImageCategory,
 } from "@/lib/store";
 import daliLogo from "@/assets/dali-lockup.png";
 
@@ -37,7 +45,7 @@ export const Route = createFileRoute("/admin/dashboard")({
   component: AdminDashboard,
 });
 
-type Tab = "reviews" | "daily" | "menu";
+type Tab = "reviews" | "daily" | "menu" | "images";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -74,6 +82,7 @@ function AdminDashboard() {
     { id: "reviews", label: "Avaliações", icon: <MessageSquare size={15} /> },
     { id: "daily", label: "Cardápio do Dia", icon: <CalendarDays size={15} /> },
     { id: "menu", label: "Cardápio", icon: <BookOpen size={15} /> },
+    { id: "images", label: "Imagens", icon: <ImageIcon size={15} /> },
   ];
 
   return (
@@ -129,6 +138,7 @@ function AdminDashboard() {
         {activeTab === "reviews" && <ReviewsTab />}
         {activeTab === "daily" && <DailyMenuTab />}
         {activeTab === "menu" && <MenuTab />}
+        {activeTab === "images" && <ImagesTab />}
       </main>
     </div>
   );
@@ -744,6 +754,206 @@ function MenuTab() {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ─── Images Tab ───────────────────────────────────────────────────────────────
+
+const IMAGE_CATEGORY_LABELS: Record<ImageCategory, string> = {
+  combo: "Combinações",
+  fresh: "Frescor & Energia",
+  hero: "Hero / Destaque",
+  banner: "Banner",
+};
+const IMAGE_CATEGORIES: ImageCategory[] = ["combo", "fresh", "hero", "banner"];
+
+function ImagesTab() {
+  const [images, setImages] = useState<ImageItem[]>([]);
+  const [mode, setMode] = useState<"url" | "file">("url");
+  const [url, setUrl] = useState("");
+  const [label, setLabel] = useState("");
+  const [category, setCategory] = useState<ImageCategory>("combo");
+  const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
+
+  function reload() { setImages(getImages()); }
+  useEffect(() => { reload(); }, []);
+
+  function flash() { setSaved(true); setTimeout(() => setSaved(false), 1500); }
+
+  function handleAddUrl() {
+    if (!url.trim()) { setError("Insira uma URL válida."); return; }
+    try { new URL(url.trim()); } catch { setError("URL inválida."); return; }
+    addImage({ src: url.trim(), label: label.trim() || url.trim(), category });
+    setUrl(""); setLabel(""); setError(""); reload(); flash();
+  }
+
+  function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const allowed = ["image/png", "image/gif", "video/mp4"];
+    if (!allowed.includes(file.type)) { setError("Formato não suportado. Use PNG, GIF ou MP4."); return; }
+    if (file.size > 4 * 1024 * 1024) { setError("Arquivo muito grande. Máximo 4 MB."); return; }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const src = ev.target?.result as string;
+      addImage({ src, label: label.trim() || file.name, category });
+      setLabel(""); setError(""); reload(); flash();
+    };
+    reader.readAsDataURL(file);
+    e.target.value = "";
+  }
+
+  function handleDelete(id: string) { deleteImage(id); reload(); }
+
+  const isVideo = (src: string) => src.startsWith("data:video") || src.endsWith(".mp4") || src.includes(".mp4?");
+
+  return (
+    <div>
+      <div className="mb-6 flex items-end justify-between">
+        <div>
+          <h2 className="font-display text-2xl text-foreground">Imagens</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Faça upload ou insira URLs de PNG, GIF ou MP4.
+          </p>
+        </div>
+        {saved && (
+          <span className="flex items-center gap-1 text-xs text-green-600 font-medium">
+            <Check size={13} /> Salvo
+          </span>
+        )}
+      </div>
+
+      {/* Add form */}
+      <div className="mb-8 rounded-xl border border-copper/30 bg-copper/5 p-5">
+        {/* Mode toggle */}
+        <div className="mb-4 flex gap-2">
+          <button
+            onClick={() => { setMode("url"); setError(""); }}
+            className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${mode === "url" ? "bg-copper text-primary-foreground" : "border border-border text-muted-foreground hover:border-copper"}`}
+          >
+            <LinkIcon size={12} /> URL
+          </button>
+          <button
+            onClick={() => { setMode("file"); setError(""); }}
+            className={`flex items-center gap-1.5 rounded-md px-3 py-1.5 text-xs font-semibold transition-colors ${mode === "file" ? "bg-copper text-primary-foreground" : "border border-border text-muted-foreground hover:border-copper"}`}
+          >
+            <Upload size={12} /> Dispositivo
+          </button>
+        </div>
+
+        {/* Category */}
+        <div className="mb-3 flex flex-wrap gap-2">
+          {IMAGE_CATEGORIES.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setCategory(cat)}
+              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-colors ${category === cat ? "bg-copper text-primary-foreground" : "border border-border text-muted-foreground hover:border-copper"}`}
+            >
+              {IMAGE_CATEGORY_LABELS[cat]}
+            </button>
+          ))}
+        </div>
+
+        {/* Label */}
+        <input
+          type="text"
+          value={label}
+          onChange={(e) => setLabel(e.target.value)}
+          placeholder="Nome / descrição (opcional)"
+          className="mb-2 w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
+        />
+
+        {mode === "url" ? (
+          <div className="flex gap-2">
+            <input
+              type="url"
+              value={url}
+              onChange={(e) => { setUrl(e.target.value); setError(""); }}
+              placeholder="https://... (PNG, GIF, MP4)"
+              className="flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm focus:border-copper focus:outline-none"
+              onKeyDown={(e) => { if (e.key === "Enter") handleAddUrl(); }}
+            />
+            <button
+              onClick={handleAddUrl}
+              className="flex items-center gap-1 rounded-md bg-copper px-3 py-2 text-xs font-semibold text-primary-foreground"
+            >
+              <Plus size={14} /> Adicionar
+            </button>
+          </div>
+        ) : (
+          <label className="flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-dashed border-copper/40 bg-background px-4 py-6 text-sm text-muted-foreground transition-colors hover:border-copper hover:bg-copper/5">
+            <Upload size={18} className="text-copper" />
+            Clique para selecionar PNG, GIF ou MP4
+            <input
+              type="file"
+              accept="image/png,image/gif,video/mp4"
+              className="hidden"
+              onChange={handleFile}
+            />
+          </label>
+        )}
+
+        {error && <p className="mt-2 text-xs text-red-500">{error}</p>}
+        <p className="mt-2 text-[0.65rem] text-muted-foreground/60">
+          Arquivos do dispositivo: máx. 4 MB. Armazenados localmente no navegador.
+        </p>
+      </div>
+
+      {/* Gallery */}
+      {images.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border py-16 text-center">
+          <ImageIcon size={32} className="mx-auto text-muted-foreground/30" />
+          <p className="mt-3 text-sm text-muted-foreground">Nenhuma imagem adicionada ainda.</p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {IMAGE_CATEGORIES.map((cat) => {
+            const catImgs = images.filter((i) => i.category === cat);
+            if (catImgs.length === 0) return null;
+            return (
+              <div key={cat}>
+                <p className="mb-3 text-[0.65rem] font-semibold uppercase tracking-[0.22em] text-copper">
+                  {IMAGE_CATEGORY_LABELS[cat]} ({catImgs.length})
+                </p>
+                <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                  {catImgs.map((img) => (
+                    <div key={img.id} className="group relative overflow-hidden rounded-xl border border-border bg-card/60">
+                      {isVideo(img.src) ? (
+                        <video
+                          src={img.src}
+                          muted
+                          loop
+                          playsInline
+                          className="aspect-square w-full object-cover"
+                          onMouseEnter={(e) => (e.currentTarget as HTMLVideoElement).play()}
+                          onMouseLeave={(e) => (e.currentTarget as HTMLVideoElement).pause()}
+                        />
+                      ) : (
+                        <img
+                          src={img.src}
+                          alt={img.label}
+                          className="aspect-square w-full object-cover"
+                        />
+                      )}
+                      <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/70 to-transparent p-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        <p className="truncate text-[0.6rem] font-medium text-white">{img.label}</p>
+                        <button
+                          onClick={() => handleDelete(img.id)}
+                          className="mt-1 flex items-center gap-1 self-start rounded-md bg-red-500/90 px-2 py-0.5 text-[0.6rem] font-semibold text-white"
+                        >
+                          <Trash2 size={10} /> Excluir
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

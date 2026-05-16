@@ -1,9 +1,15 @@
+import { useState } from "react";
 import { Coffee, Sparkles, ChevronDown } from "lucide-react";
+import { OrderBuilder } from "@/components/dali/OrderBuilder";
 
 const BG = "oklch(0.13 0.012 40)";
 
 export function Hero() {
+  const [orderOpen, setOrderOpen] = useState(false);
+
   return (
+    <>
+    <OrderBuilder open={orderOpen} onClose={() => setOrderOpen(false)} />
     <section
       className="relative overflow-hidden"
       style={{ minHeight: "100svh" }}
@@ -153,14 +159,15 @@ export function Hero() {
 
           {/* ── CTAs ── */}
           <div className="hero-ctas mt-8 flex flex-wrap items-center gap-4 sm:mt-10 sm:gap-5">
-            <a
-              href="#menu"
+            <button
+              type="button"
+              onClick={() => setOrderOpen(true)}
               className="inline-flex items-center gap-3 rounded-md bg-copper px-6 py-3.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground shadow-copper transition-all duration-300 hover:scale-[1.03] hover:brightness-110 active:scale-[0.98]
                          sm:px-7 sm:py-4 sm:text-xs"
             >
               <Coffee size={15} strokeWidth={2.2} />
               Quero experimentar
-            </a>
+            </button>
             <a
               href="#sobre"
               className="text-[10.5px] font-medium uppercase tracking-[0.18em] text-foreground/50 transition-colors duration-300 hover:text-copper sm:text-[11px]"
@@ -212,5 +219,6 @@ export function Hero() {
         </div>
       </div>
     </section>
+    </>
   );
 }
