@@ -1,31 +1,38 @@
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { getReviews, type Review } from "@/lib/store";
 
-const REVIEWS = [
+const DEFAULT_REVIEWS = [
   {
     name: "Mariana S.",
     text: "O capuccino com cacau 55% é simplesmente incrível. Cada gole é uma experiência única — cremoso, intenso e acolhedor. Me tornei cliente fiel!",
+    rating: 5,
   },
   {
     name: "Fernanda L.",
     text: "O BOOM Dali mudou minha rotina matinal. Me sinto com muito mais energia e leveza durante o dia. Um produto que realmente faz diferença.",
+    rating: 5,
   },
   {
     name: "Ana Clara M.",
     text: "Amei o kit degustação! As combinações são perfeitas e tudo muito bem apresentado. Um mimo para o paladar. Já recomendei para amigas.",
+    rating: 5,
   },
   {
     name: "Juliana P.",
     text: "Atendimento impecável e produtos de altíssima qualidade. Dali é aquele lugar que você quer frequentar sempre e presentear quem ama.",
+    rating: 5,
   },
   {
     name: "Camila R.",
     text: "O iogurte com granola e geleia é maravilhoso — leve, nutritivo e delicioso. Não consigo imaginar meu café da manhã sem ele.",
+    rating: 5,
   },
   {
     name: "Letícia M.",
     text: "A bisnaguinha de cenoura com creme de avelã é o lanche perfeito. Prático, saboroso e saudável. Dali entende o que a gente precisa!",
+    rating: 5,
   },
 ];
 
@@ -33,12 +40,26 @@ export function Testimonials() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
+  const [stored, setStored] = useState<Review[]>([]);
+
+  useEffect(() => {
+    setStored(getReviews().filter((r) => r.visible));
+    const onStorage = () => setStored(getReviews().filter((r) => r.visible));
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const reviews = useMemo(() => {
+    const userReviews = stored.map((r) => ({ name: r.name, text: r.text, rating: r.rating }));
+    return [...userReviews, ...DEFAULT_REVIEWS];
+  }, [stored]);
 
   useEffect(() => {
     if (!emblaApi) return;
+    emblaApi.reInit();
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", () => setSelectedIndex(emblaApi.selectedScrollSnap()));
-  }, [emblaApi]);
+  }, [emblaApi, reviews.length]);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -63,12 +84,16 @@ export function Testimonials() {
         <div className="mt-12 relative">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-5">
-              {REVIEWS.map((r) => (
-                <div key={r.name} className="flex-none w-full sm:w-1/2 lg:w-1/3 min-w-0">
+              {reviews.map((r, idx) => (
+                <div key={`${r.name}-${idx}`} className="flex-none w-full sm:w-1/2 lg:w-1/3 min-w-0">
                   <article className="card-glass flex flex-col rounded-2xl p-6 h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(217,114,39,0.2)]">
                     <div className="flex gap-1">
                       {Array.from({ length: 5 }).map((_, i) => (
-                        <Star key={i} size={16} className="fill-copper text-copper" />
+                        <Star
+                          key={i}
+                          size={16}
+                          className={i < r.rating ? "fill-copper text-copper" : "text-copper/30"}
+                        />
                       ))}
                     </div>
                     <p className="mt-4 flex-1 text-sm leading-relaxed text-foreground/85">
