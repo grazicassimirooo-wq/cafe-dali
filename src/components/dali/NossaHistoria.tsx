@@ -51,9 +51,9 @@ export function NossaHistoria() {
           <div className="absolute inset-0 rounded-2xl"
             style={{background: "radial-gradient(ellipse at center, rgba(217,114,39,0.08) 0%, transparent 70%)"}} />
 
-          {/* Container 9:16 — overflow hidden corta o nome/watermark do rodapé */}
-          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-[320px] h-[568px] sm:w-[360px] sm:h-[640px]"
-            style={{boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
+          {/* Container 16:9 paisagem — overflow hidden corta o nome/watermark do rodapé */}
+          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-full max-w-[600px] sm:max-w-[640px]"
+            style={{aspectRatio: "16/9", boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
             {/* Vídeo ocupa 112% da altura, ancorado no topo — empurra rodapé (nome/marca d'água) para fora */}
             <video
               src={nossaHistoriaVideo}
