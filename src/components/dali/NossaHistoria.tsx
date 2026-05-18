@@ -45,36 +45,36 @@ export function NossaHistoria() {
           </p>
         </div>
 
-        {/* Vídeo com anéis animados */}
+        {/* Vídeo quadrado com borda decorativa */}
         <div className={`relative flex items-center justify-center transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
-          {/* Anel externo pulsante */}
-          <div className="absolute h-[420px] w-[420px] rounded-full border border-copper/20 sm:h-[480px] sm:w-[480px]"
-            style={{animation: "pulse-ring 3s ease-out infinite"}} />
-          <div className="absolute h-[420px] w-[420px] rounded-full border border-copper/10 sm:h-[480px] sm:w-[480px]"
-            style={{animation: "pulse-ring 3s ease-out infinite", animationDelay: "1s"}} />
+          {/* Brilho de fundo */}
+          <div className="absolute inset-0 rounded-2xl"
+            style={{background: "radial-gradient(ellipse at center, rgba(217,114,39,0.08) 0%, transparent 70%)"}} />
 
-          {/* Anel rotativo */}
-          <div className="absolute h-[360px] w-[360px] rounded-full sm:h-[420px] sm:w-[420px]"
-            style={{
-              border: "1px dashed oklch(0.68 0.165 45 / 0.25)",
-              animation: "spin-slow 20s linear infinite"
-            }} />
-
-          {/* Círculo principal com vídeo */}
-          <div className="relative grid h-[280px] w-[280px] place-items-center overflow-hidden rounded-full border border-copper/40 sm:h-[340px] sm:w-[340px]"
-            style={{boxShadow: "0 0 60px rgba(217,114,39,0.12), inset 0 0 40px rgba(217,114,39,0.05)"}}>
-            <video
-              src={nossaHistoriaVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              aria-label="Nossa história Dali"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div className="pointer-events-none absolute inset-6 rounded-full border border-copper/20" />
+          {/* Quadrado principal com vídeo */}
+          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-[320px] h-[320px] sm:w-[400px] sm:h-[400px]"
+            style={{boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
+            {/* Container interno que escala o vídeo para cortar a marca d'água da IA (canto inferior) */}
+            <div className="absolute inset-0 overflow-hidden">
+              <video
+                src={nossaHistoriaVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                aria-label="Nossa história Dali"
+                className="absolute w-full h-[115%] object-cover object-top"
+                style={{top: 0}}
+              />
+            </div>
+            {/* Borda interna decorativa */}
+            <div className="pointer-events-none absolute inset-3 rounded-xl border border-copper/15" />
           </div>
+
+          {/* Detalhe de canto decorativo */}
+          <div className="absolute -top-2 -left-2 h-8 w-8 border-t-2 border-l-2 border-copper/50 rounded-tl-lg" />
+          <div className="absolute -bottom-2 -right-2 h-8 w-8 border-b-2 border-r-2 border-copper/50 rounded-br-lg" />
         </div>
       </div>
     </section>
