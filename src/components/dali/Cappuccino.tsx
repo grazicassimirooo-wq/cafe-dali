@@ -1,17 +1,19 @@
-import cappuccinoImg from "@/assets/cappuccino-cacau.png";
+import cappuccinoVideo from "@/assets/cappuccino-cacau.mp4";
 
 export function Cappuccino() {
   return (
     <section className="relative bg-background py-0">
       <div className="grid items-stretch lg:grid-cols-2">
-        {/* Imagem full bleed à esquerda */}
+        {/* Vídeo full bleed à esquerda */}
         <div className="relative h-[360px] lg:h-[520px]">
-          <img
-            src={cappuccinoImg}
-            alt="Capuccino com cacau 55%"
-            width={1600}
-            height={1200}
-            loading="lazy"
+          <video
+            src={cappuccinoVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            aria-label="Capuccino com cacau 55%"
             className="h-full w-full object-cover"
           />
         </div>
