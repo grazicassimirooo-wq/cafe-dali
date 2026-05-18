@@ -45,29 +45,25 @@ export function NossaHistoria() {
           </p>
         </div>
 
-        {/* Vídeo quadrado com borda decorativa */}
+        {/* Vídeo retangular com borda decorativa */}
         <div className={`relative flex items-center justify-center transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
           {/* Brilho de fundo */}
           <div className="absolute inset-0 rounded-2xl"
             style={{background: "radial-gradient(ellipse at center, rgba(217,114,39,0.08) 0%, transparent 70%)"}} />
 
-          {/* Quadrado principal com vídeo */}
-          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-[320px] h-[320px] sm:w-[400px] sm:h-[400px]"
+          {/* Retângulo portrait com vídeo completo */}
+          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-[300px] h-[480px] sm:w-[360px] sm:h-[560px]"
             style={{boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
-            {/* Container interno que escala o vídeo para cortar a marca d'água da IA (canto inferior) */}
-            <div className="absolute inset-0 overflow-hidden">
-              <video
-                src={nossaHistoriaVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                aria-label="Nossa história Dali"
-                className="absolute w-full h-[115%] object-cover object-top"
-                style={{top: 0}}
-              />
-            </div>
+            <video
+              src={nossaHistoriaVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="Nossa história Dali"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
             {/* Borda interna decorativa */}
             <div className="pointer-events-none absolute inset-3 rounded-xl border border-copper/15" />
           </div>
