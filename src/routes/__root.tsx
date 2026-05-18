@@ -1,4 +1,4 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { Outlet, Link, createRootRoute, HeadContent, Scripts, useRouter } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
 
@@ -17,6 +17,41 @@ function NotFoundComponent() {
             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Voltar ao início
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RootErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+  const router = useRouter();
+
+  console.error(error);
+
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="text-3xl font-bold text-foreground">Não foi possível carregar</h1>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Atualize a página ou volte para o início para tentar novamente.
+        </p>
+        <div className="mt-6 flex items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              router.invalidate();
+              reset();
+            }}
+            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+          >
+            Tentar novamente
+          </button>
+          <Link
+            to="/"
+            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+          >
+            Início
           </Link>
         </div>
       </div>
@@ -49,6 +84,7 @@ export const Route = createRootRoute({
   }),
   shellComponent: RootShell,
   component: RootComponent,
+  errorComponent: RootErrorComponent,
   notFoundComponent: NotFoundComponent,
 });
 
@@ -65,8 +101,13 @@ function RootShell({ children }: { children: React.ReactNode }) {
           dangerouslySetInnerHTML={{
             __html: `
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js');
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                  registrations.forEach(function(registration) { registration.unregister(); });
+                });
+              }
+              if ('caches' in window) {
+                caches.keys().then(function(keys) {
+                  keys.forEach(function(key) { caches.delete(key); });
                 });
               }
             `,
