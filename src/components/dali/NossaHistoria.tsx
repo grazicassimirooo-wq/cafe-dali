@@ -51,9 +51,9 @@ export function NossaHistoria() {
           <div className="absolute inset-0 rounded-2xl"
             style={{background: "radial-gradient(ellipse at center, rgba(217,114,39,0.08) 0%, transparent 70%)"}} />
 
-          {/* Container portrait — mostra o vídeo inteiro (incluindo o cartão) sem corte */}
-          <div className="relative overflow-hidden rounded-2xl border border-copper/40 bg-background w-[320px] h-[568px] sm:w-[400px] sm:h-[710px]"
-            style={{boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
+          {/* Container 16:9 ajustado ao vídeo — sem barras pretas */}
+          <div className="relative w-full overflow-hidden rounded-2xl border border-copper/40"
+            style={{aspectRatio: "16/9", boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
             <video
               src={nossaHistoriaVideo}
               autoPlay
@@ -62,7 +62,7 @@ export function NossaHistoria() {
               playsInline
               preload="auto"
               aria-label="Nossa história Dali"
-              className="absolute inset-0 h-full w-full object-contain"
+              className="absolute inset-0 h-full w-full object-cover"
             />
             {/* Borda interna decorativa */}
             <div className="pointer-events-none absolute inset-3 rounded-xl border border-copper/15" />
