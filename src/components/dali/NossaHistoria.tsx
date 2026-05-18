@@ -45,15 +45,16 @@ export function NossaHistoria() {
           </p>
         </div>
 
-        {/* Vídeo retangular com borda decorativa */}
+        {/* Vídeo portrait 9:16 com borda decorativa */}
         <div className={`relative flex items-center justify-center transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
           {/* Brilho de fundo */}
           <div className="absolute inset-0 rounded-2xl"
             style={{background: "radial-gradient(ellipse at center, rgba(217,114,39,0.08) 0%, transparent 70%)"}} />
 
-          {/* Retângulo portrait com vídeo completo */}
-          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-[300px] h-[480px] sm:w-[360px] sm:h-[560px]"
+          {/* Container 9:16 — overflow hidden corta o nome/watermark do rodapé */}
+          <div className="relative overflow-hidden rounded-2xl border border-copper/40 w-[320px] h-[568px] sm:w-[360px] sm:h-[640px]"
             style={{boxShadow: "0 0 60px rgba(217,114,39,0.15), inset 0 0 40px rgba(217,114,39,0.05)"}}>
+            {/* Vídeo ocupa 112% da altura, ancorado no topo — empurra rodapé (nome/marca d'água) para fora */}
             <video
               src={nossaHistoriaVideo}
               autoPlay
@@ -62,7 +63,8 @@ export function NossaHistoria() {
               playsInline
               preload="auto"
               aria-label="Nossa história Dali"
-              className="absolute inset-0 h-full w-full object-cover object-center"
+              className="absolute top-0 left-0 w-full object-cover"
+              style={{height: "112%"}}
             />
             {/* Borda interna decorativa */}
             <div className="pointer-events-none absolute inset-3 rounded-xl border border-copper/15" />
