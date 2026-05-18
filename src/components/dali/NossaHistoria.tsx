@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from "react";
-import { DaliLogo } from "@/components/DaliLogo";
+import nossaHistoriaVideo from "@/assets/nossa-historia.mp4";
 
 export function NossaHistoria() {
   const ref = useRef<HTMLDivElement>(null);
@@ -45,7 +45,7 @@ export function NossaHistoria() {
           </p>
         </div>
 
-        {/* Logo com anéis animados */}
+        {/* Vídeo com anéis animados */}
         <div className={`relative flex items-center justify-center transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
           {/* Anel externo pulsante */}
           <div className="absolute h-[420px] w-[420px] rounded-full border border-copper/20 sm:h-[480px] sm:w-[480px]"
@@ -60,14 +60,20 @@ export function NossaHistoria() {
               animation: "spin-slow 20s linear infinite"
             }} />
 
-          {/* Círculo principal */}
-          <div className="relative grid h-[280px] w-[280px] place-items-center rounded-full border border-copper/40 sm:h-[340px] sm:w-[340px]"
+          {/* Círculo principal com vídeo */}
+          <div className="relative grid h-[280px] w-[280px] place-items-center overflow-hidden rounded-full border border-copper/40 sm:h-[340px] sm:w-[340px]"
             style={{boxShadow: "0 0 60px rgba(217,114,39,0.12), inset 0 0 40px rgba(217,114,39,0.05)"}}>
-            <div className="absolute inset-6 rounded-full border border-copper/20" />
-            <DaliLogo
-              size={140}
-              className="relative glow-pulse drop-shadow-[0_4px_32px_rgba(216,115,51,0.5)]"
+            <video
+              src={nossaHistoriaVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="Nossa história Dali"
+              className="absolute inset-0 h-full w-full object-cover"
             />
+            <div className="pointer-events-none absolute inset-6 rounded-full border border-copper/20" />
           </div>
         </div>
       </div>
