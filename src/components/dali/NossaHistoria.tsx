@@ -3,14 +3,15 @@ import nossaHistoriaVideo from "@/assets/nossa-historia.mp4";
 
 export function NossaHistoria() {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
+    if (!ref.current) return;
     const observer = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) { setVisible(true); observer.disconnect(); } },
-      { threshold: 0.2 }
+      { threshold: 0.1 }
     );
-    if (ref.current) observer.observe(ref.current);
+    observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
