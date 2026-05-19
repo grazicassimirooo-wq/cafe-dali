@@ -83,7 +83,7 @@ export function Footer() {
 
           <div className="flex items-center gap-4">
             <span>Siga a Dali</span>
-            <a href="#" aria-label="Instagram" className="text-foreground/80 transition-colors hover:text-copper">
+            <a href="https://www.instagram.com/dali.c.b/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="text-foreground/80 transition-colors hover:text-copper">
               <Instagram size={16} />
             </a>
             <a href="#" aria-label="Facebook" className="text-foreground/80 transition-colors hover:text-copper">
